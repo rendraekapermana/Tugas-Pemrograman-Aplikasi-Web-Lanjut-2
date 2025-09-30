@@ -43,6 +43,7 @@ class MahasiswaController extends Controller
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Mahasiswa berhasil ditambahkan');
 
+
     }
 
     /**
@@ -53,6 +54,7 @@ class MahasiswaController extends Controller
         $mhs = Mahasiswa::findOrFail($id);
         // Anda perlu membuat view 'mahasiswa.show' untuk ini
         return view('mahasiswa.show', compact('mhs'));
+
 
     }
 
