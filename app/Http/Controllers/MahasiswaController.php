@@ -37,8 +37,7 @@ class MahasiswaController extends Controller
         ]);
         Mahasiswa::create($request->all());
         return redirect()->route('mahasiswa.index')
-            ->with('success', 'Mahasiswa berhasil 
-ditambahkan');
+            ->with('success', 'Mahasiswa berhasil ditambahkan');
     }
 
     /**

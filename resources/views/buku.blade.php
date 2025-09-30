@@ -3,31 +3,39 @@
 @section('title', 'Daftar Buku')
 
 @section('content')
-<table border="1" cellpadding="10">
+<h2>Daftar Buku</h2>
+<a href="{{ route('buku.create') }}">Tambah Buku</a>
+
+@if(session('success'))
+    <p style="color:green">{{ session('success') }}</p>
+@endif
+
+<table border="1" cellpadding="5">
     <thead>
         <tr>
             <th>Judul</th>
-            <th>Penulis</th>
-            <th>Tahun</th>
+            <th>Pengarang</th>
+            <th>Tahun Terbit</th>
+            <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        <tr></tr>
-            <td>Judul Buku 1</td>
-            <td>Penulis 1</td>
-            <td>2025</td>
-        </tr>
+        @foreach($bukus as $buku)
         <tr>
-            <td>Judul Buku 2</td>
-            <td>Penulis 2</td>
-            <td>2025</td>
+            <td>{{ $buku->judul }}</td>
+            <td>{{ $buku->pengarang }}</td>
+            <td>{{ $buku->tahun_terbit }}</td>
+            <td>
+                <a href="{{ route('buku.show', $buku->id) }}">Detail</a>
+                <a href="{{ route('buku.edit', $buku->id) }}">Edit</a>
+                <form action="{{ route('buku.destroy', $buku->id) }}" method="POST" style="display:inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" onclick="return confirm('Yakin ingin hapus?')">Hapus</button>
+                </form>
+            </td>
         </tr>
-        <tr>
-            <td>Judul Buku 3</td>
-            <td>Penulis 3</td>
-            <td>2025</td>
-        </tr>
+        @endforeach
     </tbody>
 </table>
-
 @endsection

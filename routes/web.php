@@ -1,7 +1,9 @@
 <?php
 
 use App\Http\Controllers\MahasiswaController;
+use App\Http\Controllers\BukuController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
     return view('welcome');
@@ -20,3 +22,4 @@ Route::get('/buku', function () {
 });
 
 Route::resource('mahasiswa', MahasiswaController::class);
+Route::resource('buku', BukuController::class);
