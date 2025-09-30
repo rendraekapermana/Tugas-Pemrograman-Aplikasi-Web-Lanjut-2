@@ -6,6 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Mahasiswa extends Model
 {
-    protected $fillable = ['nama', 'nim', 'prodi', 'angkatan'];
-    protected $table = 'mahasiswa';
+feature/migration-angkatan
+    protected $table = 'Mahasiswa';
+    protected $fillable = ['nama', 'nim', 'prodi'];
+main
 }
