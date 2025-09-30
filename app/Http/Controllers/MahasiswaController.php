@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
-use Closure;
+
 
 class MahasiswaController extends Controller
 {
@@ -33,18 +33,27 @@ class MahasiswaController extends Controller
             'nama' => 'required',
             'nim' => 'required|unique:mahasiswa,nim',
             'prodi' => 'required',
-            'angkatan' => ['required',
-                    function (string $attribute, mixed $value, Closure $fail) {
-                    if (!is_int($value)&&($value*1!=$value)) {
-                        $fail('Anda hanya dapat memasukkan angka pada angkatan.');
-                    }
-                }
-            ],
+
+            'angkatan' => 'required|numeric',
+
         ]);
 
         Mahasiswa::create($request->all());
+
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Mahasiswa berhasil ditambahkan');
+
+    }
+
+    /**
+     * PENAMBAHAN: Fungsi untuk menampilkan detail mahasiswa.
+     */
+    public function show($id)
+    {
+        $mhs = Mahasiswa::findOrFail($id);
+        // Anda perlu membuat view 'mahasiswa.show' untuk ini
+        return view('mahasiswa.show', compact('mhs'));
+
     }
 
     /**
@@ -70,7 +79,17 @@ class MahasiswaController extends Controller
     public function update(Request $request, $id)
     {
         $mhs = Mahasiswa::findOrFail($id);
+
+        // PENAMBAHAN: Validasi untuk proses update
+        $request->validate([
+            'nama' => 'required',
+            'nim' => 'required|unique:mahasiswa,nim,' . $mhs->id,
+            'prodi' => 'required',
+            'angkatan' => 'required|numeric',
+        ]);
+
         $mhs->update($request->all());
+
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Data berhasil diperbarui');
     }
@@ -82,6 +101,7 @@ class MahasiswaController extends Controller
     {
         $mhs = Mahasiswa::findOrFail($id);
         $mhs->delete();
+
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Data berhasil dihapus');
     }
