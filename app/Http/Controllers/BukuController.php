@@ -12,8 +12,8 @@ class BukuController extends Controller
      */
     public function index()
     {
-        $bukus = Buku::all();
-        return view('buku', compact('bukus'));
+        $buku = Buku::all();
+        return view('buku.index', compact('buku'));
     }
 
     /**
@@ -36,7 +36,7 @@ class BukuController extends Controller
         ]);
 
         Buku::create($request->all());
-        return redirect()->route('buku')->with('success', 'Buku berhasil ditambahkan');
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil ditambahkan');
     }
 
     /**
@@ -67,7 +67,7 @@ class BukuController extends Controller
         ]);
 
         $buku->update($request->all());
-        return redirect()->route('buku')->with('success', 'Buku berhasil diperbarui');
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil diperbarui');
     }
 
     /**
@@ -76,6 +76,6 @@ class BukuController extends Controller
     public function destroy(Buku $buku)
     {
         $buku->delete();
-        return redirect()->route('buku')->with('success', 'Buku berhasil dihapus');
+        return redirect()->route('buku.index')->with('success', 'Buku berhasil dihapus');
     }
 }

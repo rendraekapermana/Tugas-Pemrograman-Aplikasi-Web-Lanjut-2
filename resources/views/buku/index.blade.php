@@ -13,18 +13,14 @@
 <table border="1" cellpadding="5">
     <thead>
         <tr>
-            <th>Judul</th>
-            <th>Pengarang</th>
-            <th>Tahun Terbit</th>
+            <th>Judul Buku</th>
             <th>Aksi</th>
         </tr>
     </thead>
     <tbody>
-        @foreach($bukus as $buku)
+        @foreach($buku as $buku)
         <tr>
             <td>{{ $buku->judul }}</td>
-            <td>{{ $buku->pengarang }}</td>
-            <td>{{ $buku->tahun_terbit }}</td>
             <td>
                 <a href="{{ route('buku.show', $buku->id) }}">Detail</a>
                 <a href="{{ route('buku.edit', $buku->id) }}">Edit</a>
