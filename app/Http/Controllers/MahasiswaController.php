@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Mahasiswa;
 
+
 class MahasiswaController extends Controller
 {
     /**
@@ -27,19 +28,21 @@ class MahasiswaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'nama' => 'required',
             'nim' => 'required|unique:mahasiswa,nim',
             'prodi' => 'required',
+
             'angkatan' => 'required|numeric',
+
         ]);
 
         Mahasiswa::create($request->all());
 
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Mahasiswa berhasil ditambahkan');
+
     }
 
     /**
@@ -50,6 +53,7 @@ class MahasiswaController extends Controller
         $mhs = Mahasiswa::findOrFail($id);
         // Anda perlu membuat view 'mahasiswa.show' untuk ini
         return view('mahasiswa.show', compact('mhs'));
+
     }
 
     /**
@@ -59,6 +63,14 @@ class MahasiswaController extends Controller
     {
         $mhs = Mahasiswa::findOrFail($id);
         return view('mahasiswa.edit', compact('mhs'));
+    }
+
+    /**
+     * Show the detail for specified student.
+     */
+    public function detail($id) {
+        $data = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.detail', compact('data'));
     }
 
     /**
