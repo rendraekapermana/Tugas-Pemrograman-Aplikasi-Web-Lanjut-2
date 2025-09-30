@@ -4,10 +4,9 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mahasiswa extends Model
-{
-feature/migration-angkatan
-    protected $table = 'Mahasiswa';
-    protected $fillable = ['nama', 'nim', 'prodi'];
-main
+class Mahasiswa extends Model{
+
+    protected $table = 'mahasiswa';
+    protected $fillable = ['nama', 'nim', 'prodi', 'angkatan'];
+
 }

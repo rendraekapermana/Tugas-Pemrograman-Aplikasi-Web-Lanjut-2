@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('judul');
             $table->string('pengarang');
-            $table->integer('tahun terbit');
+            $table->integer('tahun_terbit');
             $table->timestamps();
         });
     }
