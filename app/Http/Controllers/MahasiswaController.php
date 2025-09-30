@@ -28,16 +28,34 @@ class MahasiswaController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $request->validate([
             'nama' => 'required',
-            'nim' => 'required|unique:mahasiswa',
+            'nim' => 'required|unique:mahasiswa,nim',
             'prodi' => 'required',
+
+            'angkatan' => 'required|numeric',
+
         ]);
+
         Mahasiswa::create($request->all());
+
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Mahasiswa berhasil ditambahkan');
+
+
+    }
+
+    /**
+     * PENAMBAHAN: Fungsi untuk menampilkan detail mahasiswa.
+     */
+    public function show($id)
+    {
+        $mhs = Mahasiswa::findOrFail($id);
+        // Anda perlu membuat view 'mahasiswa.show' untuk ini
+        return view('mahasiswa.show', compact('mhs'));
+
+
     }
 
     /**
@@ -50,12 +68,30 @@ class MahasiswaController extends Controller
     }
 
     /**
+     * Show the detail for specified student.
+     */
+    public function detail($id) {
+        $data = Mahasiswa::findOrFail($id);
+        return view('mahasiswa.detail', compact('data'));
+    }
+
+    /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, $id)
     {
         $mhs = Mahasiswa::findOrFail($id);
+
+        // PENAMBAHAN: Validasi untuk proses update
+        $request->validate([
+            'nama' => 'required',
+            'nim' => 'required|unique:mahasiswa,nim,' . $mhs->id,
+            'prodi' => 'required',
+            'angkatan' => 'required|numeric',
+        ]);
+
         $mhs->update($request->all());
+
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Data berhasil diperbarui');
     }
@@ -67,6 +103,7 @@ class MahasiswaController extends Controller
     {
         $mhs = Mahasiswa::findOrFail($id);
         $mhs->delete();
+
         return redirect()->route('mahasiswa.index')
             ->with('success', 'Data berhasil dihapus');
     }

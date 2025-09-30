@@ -22,4 +22,8 @@ Route::get('/buku', function () {
 });
 
 Route::resource('mahasiswa', MahasiswaController::class);
+
 Route::resource('buku', BukuController::class);
+
+Route::get('mahasiswa/detail/{id}',[MahasiswaController::class,'detail'])->name('mahasiswa.detail');
+
